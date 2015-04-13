@@ -1,5 +1,7 @@
 package fr.romainpotier.lollipock;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -10,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 
@@ -21,6 +25,8 @@ public class MainActivity extends ActionBarActivity{
     private ListView leftDrawerList;
     private ArrayAdapter<String> navigationDrawerAdapter;
     private String[] leftSliderData = {"Home", "Android", "Sitemap", "About", "Contact Me"};
+    private ImageView imageView;
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,19 @@ public class MainActivity extends ActionBarActivity{
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         navigationDrawerAdapter=new ArrayAdapter<>( MainActivity.this, android.R.layout.simple_list_item_1, leftSliderData);
         leftDrawerList.setAdapter(navigationDrawerAdapter);
+
+        button = (Button) findViewById(R.id.button);
+        imageView = (ImageView) findViewById(R.id.picture);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActivityTest.class);
+                ActivityOptions option = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, imageView, "transitionImage");
+                startActivity(intent, option.toBundle());
+            }
+        });
+
     }
 
     private void initDrawer() {
